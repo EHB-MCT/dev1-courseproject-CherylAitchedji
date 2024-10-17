@@ -12,7 +12,6 @@ function signature() {
   context.fillStyle = "black";
 
   context.fillRect(50, 50, 300, 300);
-  context.fill();
 
   //spaceinvader (links-rechts)
   context.fillStyle = "#d468c1";
