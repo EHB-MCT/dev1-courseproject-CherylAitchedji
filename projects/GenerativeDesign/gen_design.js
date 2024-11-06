@@ -8,5 +8,7 @@ generateBubbles();
 
 //functie definitie
 function generateBubbles() {
-  context.fillRect(0, 0, 200, 200);
+  let width = canvas.width;
+  let height = canvas.height;
+  context.fillRect(0, 0, width, height);
 }
