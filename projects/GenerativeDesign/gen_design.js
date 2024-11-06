@@ -13,7 +13,8 @@ function generateBubbles() {
   let height = canvas.height;
   context.fillRect(0, 0, width, height);
 
-  //tekent bubble
-  context.fillStyle = "white";
-  Utils.fillAndStrokeCircle(width / 2, height / 2, 20);
+  //tekent circle
+  context.strokeStyle = "white";
+  context.lineWidth = 7;
+  Utils.strokeEllipse(width / 2, height / 2, 100, 100);
 }

@@ -63,12 +63,6 @@ export function fillCircle(x, y, r) {
   context.fill();
 }
 
-function strokeCircle(x, y, r) {
-  context.beginPath();
-  context.ellipse(x, y, r, r, 0, 0, Math.PI * 2);
-  context.stroke();
-}
-
 /**
  * Draws a stroked ellipse of which the center is at a x, y
  * @param {*} x x coordinate of the center of the ellipse
@@ -79,6 +73,12 @@ function strokeCircle(x, y, r) {
 export function strokeEllipse(x, y, rX, rY) {
   context.beginPath();
   context.ellipse(x, y, rX, rY, 0, 0, Math.PI * 2);
+  context.stroke();
+}
+
+function strokeCircle(x, y, r) {
+  context.beginPath();
+  context.ellipse(x, y, r, r, 0, 0, Math.PI * 2);
   context.stroke();
 }
 
