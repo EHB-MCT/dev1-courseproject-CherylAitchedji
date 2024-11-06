@@ -94,15 +94,29 @@ export function fillAndStrokeEllipse(x, y, w, h) {
 
 /**
  *
- * @param {*} x x coordinate of the first point.
- * @param {*} y y coordinate of the first point.
- * @param {*} x coordinate of the second point.
- * @param {*} y y coordinate of the second point.
+ * @param {*} x1 x coordinate of the first point.
+ * @param {*} y1 y coordinate of the first point.
+ * @param {*} x2 x coordinate of the second point.
+ * @param {*} y2 y coordinate of the second point.
  */
 export function drawLine(x1, y1, x2, y2) {
   context.beginPath();
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);
+  context.stroke();
+}
+
+/**
+ *
+ * @param {*} x x coordinate of the start point.
+ * @param {*} y y coordinate of the start point.
+ * @param {*} r raduis of the arc.
+ * @param {*} sa y coordinate of the first point.
+ * @param {*} ea x coordinate of the second point.
+ */
+export function drawArc(x, y, r, sa, ea) {
+  context.beginPath();
+  context.arcTo(x, y, r, sa, ea);
   context.stroke();
 }
 
