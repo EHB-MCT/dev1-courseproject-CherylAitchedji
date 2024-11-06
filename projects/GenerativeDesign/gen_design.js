@@ -20,5 +20,5 @@ function generateBubbles() {
   // tekent circle
   context.strokeStyle = "white";
   context.lineWidth = 7;
-  Utils.strokeEllipse(rxpos, rypos / 2, 200, 200);
+  Utils.strokeEllipse(rxpos, rypos, 200, 200);
 }
