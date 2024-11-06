@@ -27,7 +27,9 @@ function generateBubble() {
   let n = 50;
   //Teken cirkels
   for (let i = 0; i < n; i++) {
-    Utils.strokeCircle(
+    //geeft elk cirkel een kleur tussen geel tot paars
+    context.fillStyle = Utils.hsla(Utils.randomNumber(60, 300), 100, 70, 70);
+    Utils.fillAndStrokeCircle(
       width * Math.random(),
       height * Math.random(),
       Math.random() * 100
