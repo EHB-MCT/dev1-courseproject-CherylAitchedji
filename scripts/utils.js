@@ -76,7 +76,7 @@ export function strokeEllipse(x, y, rX, rY) {
   context.stroke();
 }
 
-function strokeCircle(x, y, r) {
+export function strokeCircle(x, y, r) {
   context.beginPath();
   context.ellipse(x, y, r, r, 0, 0, Math.PI * 2);
   context.stroke();
