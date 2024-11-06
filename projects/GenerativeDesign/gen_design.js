@@ -4,10 +4,10 @@ import context from "../../scripts/context.js";
 import * as Utils from "../../scripts/utils.js";
 
 //functieoproep
-generateBubbles();
+generateBubble();
 
 // functie definitie
-function generateBubbles() {
+function generateBubble() {
   // variabelen deklareren
   //hoogte + breedte van container (scherm)
   let width = canvas.width;
@@ -24,5 +24,5 @@ function generateBubbles() {
   // tekent circle
   context.strokeStyle = "white";
   context.lineWidth = 7;
-  Utils.strokeEllipse(xpos, ypos / 2, random_r, random_r);
+  Utils.strokeEllipse(xpos, ypos, random_r, random_r);
 }
