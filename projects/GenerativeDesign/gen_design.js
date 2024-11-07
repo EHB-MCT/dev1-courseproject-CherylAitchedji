@@ -3,15 +3,13 @@
 import context from "../../scripts/context.js";
 import * as Utils from "../../scripts/utils.js";
 
-//Linewidth
-let n = 10;
-
 // variabelen deklareren
 //hoogte + breedte van container (scherm)
 let width = canvas.width;
 let height = canvas.height;
-//creert random raduis
-let random_r = Math.random() * 100;
+//Linewidth
+let n = 7;
+
 //functieoproep
 draw();
 
@@ -23,22 +21,36 @@ function draw() {
   context.strokeStyle = "white";
   context.lineWidth = n;
 
-  //  generateBubbles(100, 200, 50);
-  bubble(width / 2, height / 2, 200);
+  //functieoproep
+  generateBubbles();
 }
 
-function generateBubbles() {}
+////////////////////////Bubble generator////////////////////////
+function generateBubbles() {
+  let amount = 35;
+  let r = Utils.randomNumber(50, 100);
+  let margin = 200;
 
+  //loop om meerdere bubbles de genereren doorheen de scherm (+margin)
+  for (let i = 0; i < amount; i++) {
+    bubble(
+      (width - margin) * Math.random() + margin / 2,
+      (height - margin) * Math.random() + margin / 2,
+      r
+    );
+  }
+}
 ////////////////////////////Bubble//////////////////////////////
 function bubble(x, y, size) {
   //omtrek bubble
+  context.strokeStyle = "white";
   Utils.strokeCircle(x, y, size);
   //neemt kleur tussen geel tot paars
-  context.strokeStyle = Utils.hsla(Utils.randomNumber(130, 330), 100, 70, 70);
+  context.strokeStyle = Utils.hsla(Utils.randomNumber(180, 300), 100, 50, 70);
   //highlight 1
   Utils.strokeCircle(x, y, size - n);
   //highlight 2
-  context.strokeStyle = Utils.hsla(Utils.randomNumber(50, 120), 100, 70, 70);
+  context.strokeStyle = Utils.hsla(Utils.randomNumber(50, 120), 100, 50, 70);
   Utils.strokeCircle(x, y, size - n * 2);
   //Spark
   context.fillStyle = "white";
