@@ -1,0 +1,22 @@
+// functie definitie van generateBubble
+function generateBubbles(x, y, size) {
+  // aantal cirkels
+  let n = 50;
+  let r = Utils.randomNumber(50, 100);
+  //Teken cirkels
+  for (let i = 0; i < n; i++) {
+    //main cirkel
+    Utils.fillAndStrokeCircle(width * Math.random(), height * Math.random(), r);
+    for (let j = 0; j < 2; j++) {
+      ////geeft elk cirkel een kleur tussen geel tot paars
+      context.strokeStyle = Utils.hsla(
+        Utils.randomNumber(60, 300),
+        100,
+        70,
+        70
+      );
+      //highlights
+      /////////////////////////////////////
+    }
+  }
+}
