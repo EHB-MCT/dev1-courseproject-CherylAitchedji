@@ -8,8 +8,7 @@ import * as Utils from "../../scripts/utils.js";
 let width = canvas.width;
 let height = canvas.height;
 //Linewidth
-let n = 7;
-
+let n = 4;
 //functieoproep
 draw();
 
@@ -28,15 +27,15 @@ function draw() {
 ////////////////////////Bubble generator////////////////////////
 function generateBubbles() {
   let amount = 35;
-  let r = Utils.randomNumber(50, 100);
   let margin = 200;
+  let x = Utils.randomNumber(margin / 2, width - margin / 2);
 
   //loop om meerdere bubbles de genereren doorheen de scherm (+margin)
   for (let i = 0; i < amount; i++) {
     bubble(
-      (width - margin) * Math.random() + margin / 2,
-      (height - margin) * Math.random() + margin / 2,
-      r
+      Utils.randomNumber(margin / 2, width - margin / 2),
+      Utils.randomNumber(margin / 2, height - margin / 2),
+      Utils.randomNumber(20, 100)
     );
   }
 }
@@ -45,11 +44,12 @@ function bubble(x, y, size) {
   //omtrek bubble
   context.strokeStyle = "white";
   Utils.strokeCircle(x, y, size);
-  //neemt kleur tussen geel tot paars
+  //neemt kleur tussen blauw tot paars
   context.strokeStyle = Utils.hsla(Utils.randomNumber(180, 300), 100, 50, 70);
   //highlight 1
   Utils.strokeCircle(x, y, size - n);
   //highlight 2
+  //neemt kleur tussen geel tot groen
   context.strokeStyle = Utils.hsla(Utils.randomNumber(50, 120), 100, 50, 70);
   Utils.strokeCircle(x, y, size - n * 2);
   //Spark
