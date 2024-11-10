@@ -6,7 +6,8 @@
 // Which was adapted from PApplet.java                                                                       //
 // which was adapted from toxi                                                                     //
 // which was adapted from the german demo group farbrausch                                         //
-// as used in their demo "art": http://www.farb-rausch.de/fr010src.zip                             //
+// as used in their demo "art": http://www.farb-rausch.de/fr010src.zip
+// used for school task
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 let seed;
