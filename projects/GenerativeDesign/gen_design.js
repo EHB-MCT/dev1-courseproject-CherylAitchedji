@@ -41,11 +41,12 @@ function generateBubbles() {
 }
 //////////////////////////Sparkle Generator/////////////////////////
 function generateSparkles() {
-  let amount = 10;
+  let amount = 100;
   for (let i = 0; i < amount; i++) {
-    let x = i * 200;
+    let x = i * 50;
     let y = height / 4 + Noise.perlinNoise(i) * 500;
     sparkle(x, y);
+    sparkle(x - 20, y - 20);
   }
 }
 ////////////////////////////Bubble//////////////////////////////
@@ -78,7 +79,7 @@ function bubble(x, y, size) {
 ///////////////////////////////////SPARKLE///////////////////////////////////////
 //teken sparkle op positie x, y
 function sparkle(x, y) {
-  context.strokeStyle = "white";
+  context.strokeStyle = Utils.hsla(Utils.randomNumber(0, 300), 100, 90, 75);
   Utils.drawLine(x, y, x + 50, y);
   Utils.drawLine(x + 25, y - 30, x + 25, y + 30);
   Utils.fillCircle(x + 25, y, 7);
