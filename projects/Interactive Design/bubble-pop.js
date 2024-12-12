@@ -7,35 +7,32 @@ import * as Noise from "../../scripts/noise.js";
 let width = canvas.width;
 let height = canvas.height;
 
-let n = 5;
+let speed = 3;
+let moving = true;
 
 //let bubbles = [];
 
-setup();
-
-////////////////////////////Canvas//////////////////////////////
+////////////////////////////Setup//////////////////////////////
+//creeeren van loop met bubble object
 function setup() {
-  // maakt zwart achtergrond met als argumenten breedte en hoogte van scherm
-  context.fillStyle = "black";
-  context.fillRect(0, 0, width, height);
-  //Linewidth bubble
-  context.lineWidth = 5;
-
-  bubble(500, 500, 200);
+  for (let i = 0; i < 35; i++) {
+    let bubble = {
+      x: Utils.randomNumber(0, width),
+      y: Utils.randomNumber(0, height),
+      size: Utils.randomNumber(20, 50),
+      color: Utils.randomNumber(0, 255),
+    };
+  }
 }
 
-///////////////////////////////Bubble////////////////////////////
-function bubble(x, y, size) {
+///////////////////////////////Bubble Object////////////////////////////
+function bubble(x, y, size, hue) {
+  let n = (context.lineWidth = 5);
   //omtrek bubble
   context.strokeStyle = "white";
   Utils.strokeCircle(x, y, size);
   //neemt kleur over heel rgb spectrum
-  context.strokeStyle = Utils.rgba(
-    Utils.randomNumber(0, 255),
-    Utils.randomNumber(0, 255),
-    Utils.randomNumber(0, 255),
-    75
-  );
+  context.strokeStyle = Utils.hsla(hue, 100, 50, 75);
   //highlight 1
   Utils.strokeCircle(x, y, size - n);
   //highlight 2
@@ -50,3 +47,22 @@ function bubble(x, y, size) {
   context.fillStyle = "white";
   Utils.fillCircle(x + size / 2, y - size / 3, size / 5);
 }
+
+/////////////////////////////Animation///////////////////////////
+
+draw();
+
+function draw() {
+  if (moving) {
+    context.fillStyle = "black";
+    context.fillRect(0, 0, width, height);
+
+    bubble(200, 200, 200, 100);
+  }
+  requestAnimationFrame(draw);
+}
+
+// bubble
+// bubble randomizen
+// bubble beweegt + bounced rond de scherm (container scherm)
+// klik op bubble? verdwijnt
