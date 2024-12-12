@@ -7,59 +7,61 @@ import * as Noise from "../../scripts/noise.js";
 let width = canvas.width;
 let height = canvas.height;
 
-let speed = 3;
+let bubbles = [];
 let moving = true;
-
-//let bubbles = [];
+setup();
+draw();
 
 ////////////////////////////Setup//////////////////////////////
 //creeeren van loop met bubble object
+//pusht bubble object in array (bubbles)
 function setup() {
-  for (let i = 0; i < 35; i++) {
+  let amount = 25;
+  let margin = 50;
+  for (let i = 0; i < amount; i++) {
     let bubble = {
-      x: Utils.randomNumber(0, width),
-      y: Utils.randomNumber(0, height),
-      size: Utils.randomNumber(20, 50),
-      color: Utils.randomNumber(0, 255),
+      x: Utils.randomNumber(margin, width - margin),
+      y: Utils.randomNumber(margin, height - margin),
+      size: Utils.randomNumber(20, 100),
+      hue1: Utils.randomNumber(0, 360),
+      hue2: Utils.randomNumber(0, 360),
+      speed: 3,
     };
+    bubbles.push(bubble);
   }
 }
 
-///////////////////////////////Bubble Object////////////////////////////
-function bubble(x, y, size, hue) {
-  let n = (context.lineWidth = 5);
-  //omtrek bubble
-  context.strokeStyle = "white";
-  Utils.strokeCircle(x, y, size);
-  //neemt kleur over heel rgb spectrum
-  context.strokeStyle = Utils.hsla(hue, 100, 50, 75);
-  //highlight 1
-  Utils.strokeCircle(x, y, size - n);
-  //highlight 2
-  context.strokeStyle = Utils.rgba(
-    Utils.randomNumber(0, 255),
-    Utils.randomNumber(0, 255),
-    Utils.randomNumber(0, 255),
-    50
-  );
-  Utils.strokeCircle(x, y, size - n * 2);
-  //Specular highlight
-  context.fillStyle = "white";
-  Utils.fillCircle(x + size / 2, y - size / 3, size / 5);
-}
-
 /////////////////////////////Animation///////////////////////////
-
-draw();
 
 function draw() {
   if (moving) {
     context.fillStyle = "black";
     context.fillRect(0, 0, width, height);
+    for (let i = 0; i < bubbles.length; i++) {
+      let bubble = bubbles[i];
 
-    bubble(200, 200, 200, 100);
+      drawBubble(bubble.x, bubble.y, bubble.size, bubble.hue1, bubble.hue2);
+    }
   }
   requestAnimationFrame(draw);
+}
+
+///////////////////////////////Bubble Object////////////////////////////
+function drawBubble(x, y, size, hue1, hue2) {
+  let n = (context.lineWidth = 5);
+  //omtrek bubble
+  context.strokeStyle = "white";
+  Utils.strokeCircle(x, y, size);
+  //neemt kleur over heel rgb spectrum
+  context.strokeStyle = Utils.hsla(hue1, 50, 50, 75);
+  //highlight 1
+  Utils.strokeCircle(x, y, size - n);
+  //highlight 2
+  context.strokeStyle = Utils.hsla(hue2, 50, 50, 75);
+  Utils.strokeCircle(x, y, size - n * 2);
+  //Specular highlight
+  context.fillStyle = "white";
+  Utils.fillCircle(x + size / 2, y - size / 3, size / 5);
 }
 
 // bubble
