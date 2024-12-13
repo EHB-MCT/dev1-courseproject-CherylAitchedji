@@ -25,7 +25,8 @@ function setup() {
       size: Utils.randomNumber(20, 100),
       hue1: Utils.randomNumber(0, 360),
       hue2: Utils.randomNumber(0, 360),
-      speed: 3,
+      hSpeed: Utils.randomNumber(1, 3),
+      vSpeed: Utils.randomNumber(1, 3),
     };
     bubbles.push(bubble);
   }
@@ -37,10 +38,20 @@ function draw() {
   if (moving) {
     context.fillStyle = "black";
     context.fillRect(0, 0, width, height);
+    console.log(bubbles);
     for (let i = 0; i < bubbles.length; i++) {
       let bubble = bubbles[i];
 
       drawBubble(bubble.x, bubble.y, bubble.size, bubble.hue1, bubble.hue2);
+      bubble.x += bubble.hSpeed;
+      bubble.y += bubble.vSpeed;
+      if (bubble.x >= width - bubble.size || bubble.x <= bubble.size) {
+        bubble.hSpeed *= -1;
+      }
+      if (bubble.y >= height - bubble.size || bubble.y <= bubble.size) {
+        bubble.vSpeed *= -1;
+      }
+      bubbles[i] = bubble;
     }
   }
   requestAnimationFrame(draw);
@@ -64,7 +75,6 @@ function drawBubble(x, y, size, hue1, hue2) {
   Utils.fillCircle(x + size / 2, y - size / 3, size / 5);
 }
 
-// bubble
-// bubble randomizen
-// bubble beweegt + bounced rond de scherm (container scherm)
 // klik op bubble? verdwijnt
+//score
+//signature
