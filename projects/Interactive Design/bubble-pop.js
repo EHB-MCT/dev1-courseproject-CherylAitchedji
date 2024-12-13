@@ -4,11 +4,17 @@ import context from "../../scripts/context.js";
 import * as Utils from "../../scripts/utils.js";
 import * as Noise from "../../scripts/noise.js";
 
+//scherm breedte en hoogte
 let width = canvas.width;
 let height = canvas.height;
 
+//lege array om bubbles in te plaatsen
 let bubbles = [];
 let moving = true;
+
+window.onmousedown = click;
+
+//functie oproep
 setup();
 draw();
 
@@ -25,8 +31,9 @@ function setup() {
       size: Utils.randomNumber(20, 100),
       hue1: Utils.randomNumber(0, 360),
       hue2: Utils.randomNumber(0, 360),
-      hSpeed: Utils.randomNumber(1, 3),
-      vSpeed: Utils.randomNumber(1, 3),
+      hSpeed: Utils.randomNumber(1, 7),
+      vSpeed: Utils.randomNumber(1, 7),
+      popped: false,
     };
     bubbles.push(bubble);
   }
@@ -42,7 +49,7 @@ function draw() {
     for (let i = 0; i < bubbles.length; i++) {
       let bubble = bubbles[i];
 
-      drawBubble(bubble.x, bubble.y, bubble.size, bubble.hue1, bubble.hue2);
+      drawBubble(bubble);
       bubble.x += bubble.hSpeed;
       bubble.y += bubble.vSpeed;
       if (bubble.x >= width - bubble.size || bubble.x <= bubble.size) {
@@ -58,23 +65,43 @@ function draw() {
 }
 
 ///////////////////////////////Bubble Object////////////////////////////
-function drawBubble(x, y, size, hue1, hue2) {
+function drawBubble(bubble) {
   let n = (context.lineWidth = 5);
   //omtrek bubble
   context.strokeStyle = "white";
-  Utils.strokeCircle(x, y, size);
+  Utils.strokeCircle(bubble.x, bubble.y, bubble.size);
   //neemt kleur over heel rgb spectrum
-  context.strokeStyle = Utils.hsla(hue1, 50, 50, 75);
+  context.strokeStyle = Utils.hsla(bubble.hue1, 50, 50, 75);
   //highlight 1
-  Utils.strokeCircle(x, y, size - n);
+  Utils.strokeCircle(bubble.x, bubble.y, bubble.size - n);
   //highlight 2
-  context.strokeStyle = Utils.hsla(hue2, 50, 50, 75);
-  Utils.strokeCircle(x, y, size - n * 2);
+  context.strokeStyle = Utils.hsla(bubble.hue2, 50, 50, 75);
+  Utils.strokeCircle(bubble.x, bubble.y, bubble.size - n * 2);
   //Specular highlight
   context.fillStyle = "white";
-  Utils.fillCircle(x + size / 2, y - size / 3, size / 5);
+  Utils.fillCircle(
+    bubble.x + bubble.size / 2,
+    bubble.y - bubble.size / 3,
+    bubble.size / 5
+  );
 }
 
+/**
+ * @param {MouseEvent} e
+ */
+function click(e) {
+  for (let i = 0; i < bubbles.length; i++) {
+    let distance = Utils.calculateDistance(
+      e.pageX,
+      e.pageY,
+      bubbles[i].x,
+      bubbles[i].y
+    );
+    if (distance < 10) {
+      bubbles[i].popped = true;
+    }
+  }
+}
 // klik op bubble? verdwijnt
 //score
 //signature
