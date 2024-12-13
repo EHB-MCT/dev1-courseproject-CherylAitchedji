@@ -42,13 +42,17 @@ function setup() {
 /////////////////////////////Animation///////////////////////////
 
 function draw() {
+  //teken zwarte canvas
   context.fillStyle = "black";
   context.fillRect(0, 0, width, height);
+  //teken space invader
   signature();
   if (moving) {
+    //ittereert door array, tekent bubble per positie van array
     for (let i = 0; i < bubbles.length; i++) {
       let bubble = bubbles[i];
       drawBubble(bubble);
+      //bubble beweegt door positie + snelheid
       bubble.x += bubble.hSpeed;
       bubble.y += bubble.vSpeed;
       if (bubble.x >= width - bubble.size || bubble.x <= bubble.size) {
@@ -57,7 +61,6 @@ function draw() {
       if (bubble.y >= height - bubble.size || bubble.y <= bubble.size) {
         bubble.vSpeed *= -1;
       }
-      bubbles[i] = bubble;
     }
   }
   requestAnimationFrame(draw);
@@ -125,8 +128,9 @@ function click(e) {
 
 ////////////////////////////////////////////////////////////////////SIGNATURE///////////////////////////////////////////////////////////////////////////////////
 function signature() {
+  //kleur
   context.fillStyle = "#d468c1";
-
+  // space Invader (links naar rechts)
   context.fillRect(1400, 750, 50, 150);
   context.fillRect(1450, 650, 50, 200);
   context.fillRect(1500, 650, 50, 50);
