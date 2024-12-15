@@ -14,12 +14,13 @@ let amountBubbles = 25;
 
 //Mouse event (op muis drukken)
 window.onmousedown = click;
+window.onmousemove = hover;
 
 //functie oproepen
 setup();
 draw();
 
-////////////////////////////Setup//////////////////////////////
+///////////////////////////////////////////////////////////////////////////Setup///////////////////////////////////////////////////////////////////////
 //creeeren van loop met bubble object
 //pusht bubble object in array (bubbles)
 function setup() {
@@ -34,12 +35,13 @@ function setup() {
       hSpeed: Utils.randomNumber(1, 7),
       vSpeed: Utils.randomNumber(1, 7),
       popped: false,
+      grow: false,
     };
     bubbles.push(bubble);
   }
 }
 
-/////////////////////////////Animation///////////////////////////
+//////////////////////////////////////////////////////////////////Animation/////////////////////////////////////////////////////////////////
 
 function draw() {
   //teken zwarte canvas
@@ -66,18 +68,16 @@ function draw() {
   requestAnimationFrame(draw);
 }
 
-////////////////////////////////////////Win paneel///////////////////////////////
-//if (amountBubbles == 0) {
-// moving = false;
-// context.fillStyle = "white";
-// context.font = "bold" + 300 + "pt Ariel";
-// context.fillText("Good Job!!!", width / 2, height / 2);
-
-///////////////////////////////Bubble Object////////////////////////////
+/////////////////////////////////////////////////////////////Bubble Object/////////////////////////////////////////////////////////////////
 function drawBubble(bubble) {
   let n = (context.lineWidth = 5);
 
   //als bubble.popped true is (op bubble clickt), teken een sparkle in plaats van bubble
+  if (bubble.grow) {
+    bubble.size = bubble.size * 1.5;
+  } else {
+    bubble.size;
+  }
   if (bubble.popped) {
     //Utils.strokeCircle(bubble.x, bubble.y, 0);
     context.strokeStyle = Utils.hsla(Utils.randomNumber(0, 300), 100, 90, 75);
@@ -105,7 +105,7 @@ function drawBubble(bubble) {
     );
   }
 }
-////////////////////////////////////////////////MOUSE EVENT///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////MOUSE EVENT///////////////////////////////////////////////////////////////////////////////////
 /**
  * @param {MouseEvent} e
  */
@@ -119,13 +119,24 @@ function click(e) {
       bubbles[i].x,
       bubbles[i].y
     );
-    console.log(distance);
     if (distance < hitbox) {
       bubbles[i].popped = true;
     }
   }
 }
 
+function hover(e) {
+  let hitbox = 75;
+  for (let i = 0; i < bubbles.length; i++) {
+    let distance = Utils.calculateDistance(
+      e.pageX,
+      e.pageY,
+      bubbles[i].x,
+      bubbles[i].y
+    );
+    if (distance < hitbox) bubbles[i].grow = true;
+  }
+}
 ////////////////////////////////////////////////////////////////////SIGNATURE///////////////////////////////////////////////////////////////////////////////////
 function signature() {
   //kleur
