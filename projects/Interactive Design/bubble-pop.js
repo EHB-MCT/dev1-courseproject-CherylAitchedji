@@ -14,7 +14,6 @@ let amountBubbles = 25;
 
 //Mouse event (op muis drukken)
 window.onmousedown = click;
-window.onmousemove = hover;
 
 //functie oproepen
 setup();
@@ -35,7 +34,7 @@ function setup() {
       hSpeed: Utils.randomNumber(1, 7),
       vSpeed: Utils.randomNumber(1, 7),
       popped: false,
-      grow: false,
+      changed: false,
     };
     bubbles.push(bubble);
   }
@@ -73,11 +72,6 @@ function drawBubble(bubble) {
   let n = (context.lineWidth = 5);
 
   //als bubble.popped true is (op bubble clickt), teken een sparkle in plaats van bubble
-  if (bubble.grow) {
-    bubble.size = bubble.size * 1.5;
-  } else {
-    bubble.size;
-  }
   if (bubble.popped) {
     //Utils.strokeCircle(bubble.x, bubble.y, 0);
     context.strokeStyle = Utils.hsla(Utils.randomNumber(0, 300), 100, 90, 75);
@@ -122,19 +116,6 @@ function click(e) {
     if (distance < hitbox) {
       bubbles[i].popped = true;
     }
-  }
-}
-
-function hover(e) {
-  let hitbox = 75;
-  for (let i = 0; i < bubbles.length; i++) {
-    let distance = Utils.calculateDistance(
-      e.pageX,
-      e.pageY,
-      bubbles[i].x,
-      bubbles[i].y
-    );
-    if (distance < hitbox) bubbles[i].grow = true;
   }
 }
 ////////////////////////////////////////////////////////////////////SIGNATURE///////////////////////////////////////////////////////////////////////////////////
