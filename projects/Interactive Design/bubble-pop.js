@@ -9,13 +9,11 @@ let height = canvas.height;
 
 //lege array om bubbles in te plaatsen
 let bubbles = [];
-let moving = true;
-let amountBubbles = 25;
 
 //Mouse event (op muis drukken)
 window.onmousedown = click;
 
-//functie oproepen
+//functies oproepen
 setup();
 draw();
 
@@ -24,6 +22,8 @@ draw();
 //pusht bubble object in array (bubbles)
 function setup() {
   let margin = 50;
+  let amountBubbles = 30;
+  //vult lijst met bubble objecten
   for (let i = 0; i < amountBubbles; i++) {
     let bubble = {
       x: Utils.randomNumber(margin, width - margin),
@@ -31,10 +31,10 @@ function setup() {
       size: Utils.randomNumber(50, 150),
       hue1: Utils.randomNumber(0, 360),
       hue2: Utils.randomNumber(0, 360),
-      hSpeed: Utils.randomNumber(1, 7),
-      vSpeed: Utils.randomNumber(1, 7),
+      hSpeed: Utils.randomNumber(2, 10),
+      vSpeed: Utils.randomNumber(2, 10),
+      fill: i % 2,
       popped: false,
-      changed: false,
     };
     bubbles.push(bubble);
   }
@@ -46,22 +46,21 @@ function draw() {
   //teken zwarte canvas
   context.fillStyle = "black";
   context.fillRect(0, 0, width, height);
-  //teken space invader
+  //tekent space invader
   signature();
-  if (moving) {
-    //ittereert door array, tekent bubble per positie van array
-    for (let i = 0; i < bubbles.length; i++) {
-      let bubble = bubbles[i];
-      drawBubble(bubble);
-      //bubble beweegt door positie + snelheid
-      bubble.x += bubble.hSpeed;
-      bubble.y += bubble.vSpeed;
-      if (bubble.x >= width - bubble.size || bubble.x <= bubble.size) {
-        bubble.hSpeed *= -1;
-      }
-      if (bubble.y >= height - bubble.size || bubble.y <= bubble.size) {
-        bubble.vSpeed *= -1;
-      }
+  //als loop true is
+  //ittereert door array, tekent bubble per positie van array
+  for (let i = 0; i < bubbles.length; i++) {
+    let bubble = bubbles[i];
+    drawBubble(bubble);
+    //bubble beweegt door positie + snelheid
+    bubble.x += bubble.hSpeed;
+    bubble.y += bubble.vSpeed;
+    if (bubble.x >= width - bubble.size || bubble.x <= bubble.size) {
+      bubble.hSpeed *= -1;
+    }
+    if (bubble.y >= height - bubble.size || bubble.y <= bubble.size) {
+      bubble.vSpeed *= -1;
     }
   }
   requestAnimationFrame(draw);
@@ -79,6 +78,11 @@ function drawBubble(bubble) {
     Utils.drawLine(bubble.x + 25, bubble.y - 30, bubble.x + 25, bubble.y + 30);
     Utils.fillCircle(bubble.x + 25, bubble.y, 7);
     //als bubble.popped false is (niet gepopped), teken een bubble
+  } else if (bubble.fill) {
+    //bubble style 2
+    context.fillStyle = Utils.hsla(bubble.hue1, 50, 50, 25);
+    Utils.strokeCircle(bubble.x, bubble.y, bubble.size);
+    Utils.fillCircle(bubble.x, bubble.y, bubble.size);
   } else {
     //omtrek bubble
     context.strokeStyle = "white";
@@ -100,11 +104,12 @@ function drawBubble(bubble) {
   }
 }
 //////////////////////////////////////////////////////////////////////////MOUSE EVENT///////////////////////////////////////////////////////////////////////////////////
+// e = eventData
 /**
  * @param {MouseEvent} e
  */
 function click(e) {
-  let hitbox = 75;
+  let hitbox = 80;
   // vergelijk afstanden van elk bubble met geclickte plaats (van muis), als de afstand kleiner is dan de hitbox, wordt bubble.popped op true gezet
   for (let i = 0; i < bubbles.length; i++) {
     let distance = Utils.calculateDistance(
